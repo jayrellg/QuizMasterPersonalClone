@@ -1,8 +1,25 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+    // Allow authenticated users to read and write their own data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Allow authenticated users to read default questions
+    match /default-questions/{document} {
+      allow read: if request.auth != null;
+    }
+    
+    // Allow authenticated users to read quizzes
+    match /quizzes/{document} {
+      allow read: if request.auth != null;
+    }
+    
+    // Allow authenticated users to manage their custom quizzes
+    match /custom_quizzes/{document} {
+      allow read, write: if request.auth != null && 
+        (resource == null || resource.data.creator == request.auth.uid);
     }
   }
 }
