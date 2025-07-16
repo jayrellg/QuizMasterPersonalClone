@@ -31,12 +31,6 @@
 :root {
   /* Default background color */
   --background-color: #242424; 
-  
-}
-
-/* High Contrast Mode */
-.high-contrast {
-  --background-color: #928f8f; /* High contrast background color */
 }
 
 /* Apply background color to body */
