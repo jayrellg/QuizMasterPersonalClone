@@ -41,10 +41,13 @@ export default function Login() {
     try {
       setError("");
       setLoading(true);
+      console.log("Attempting Google sign-in..."); // Debug log
       await googleLogin();
+      console.log("Google sign-in successful!"); // Debug log
       localStorage.setItem("isAuthenticated", "true");
-    } catch {
-      setError("Failed to sign in with Google");
+    } catch (error) {
+      console.error("Google sign-in error:", error); // Debug log
+      setError(`Failed to sign in with Google: ${error.message}`);
     }
     setLoading(false);
   }
